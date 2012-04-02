@@ -3,21 +3,23 @@
     package="com.tassadar.yunifly"
     android:versionCode="1"
     android:versionName="1.0" >
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <uses-sdk android:minSdkVersion="8" />
 
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
-        <activity
-            android:name=".YuniFlyclientActivity"
-            android:label="@string/app_name" >
+        <activity android:name="com.tassadar.yunifly.YuniFlyclientActivity" android:label="@string/app_name" android:configChanges="orientation" android:screenOrientation="unspecified">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.tassadar.yunifly.InfoActivity" android:label="@string/app_name" android:configChanges="orientation"></activity>
     </application>
 
 </manifest>

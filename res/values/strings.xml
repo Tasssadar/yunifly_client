@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, YuniFlyclientActivity!</string>
     <string name="app_name">YuniFly client</string>
-
+    <string name="scan">Scan</string>
+    <string name="paired_devices">Paired devices</string>
+    <string name="new_devices">New devices</string>
+    <string name="connecting">Connecting...</string>
+    <string name="con_lost">Connection lost!</string>
+    <string name="unable_to_con">Unable to connect!</string>
+    <string name="cur_board">Current board:</string>
+    <string name="choose_board">Choose board:</string>
+    <string name="cur_voltage">Current voltage: </string>
+    <string name="pot">POT</string>
 </resources>
