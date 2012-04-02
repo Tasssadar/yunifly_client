@@ -13,7 +13,8 @@
 	    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	              android:orientation="horizontal"
 	              android:layout_width="fill_parent" 
-	              android:layout_height="wrap_content">
+	              android:layout_height="wrap_content"
+	              android:layout_weight="1">
 	        <TextView android:id="@+id/title_label"
 	            android:layout_width="wrap_content"
 	            android:text="@string/app_name"
@@ -32,7 +33,8 @@
 	        android:layout_width="fill_parent"
 	        android:stretchColumns="1"
 	        android:layout_height="wrap_content"
-	        android:gravity="center_vertical" >
+	        android:gravity="center_vertical"
+	        android:layout_weight="1" >
 	        <TableRow
 	            android:id="@+id/tableRow1"
 	            android:layout_width="fill_parent"
@@ -69,7 +71,8 @@
 	    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content">
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1">
 	        <HorizontalScrollView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -84,6 +87,25 @@
 	                />
 	        </HorizontalScrollView>
 	    </RelativeLayout>
+	    
+	    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1">
+	        <HorizontalScrollView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:fillViewport="true"
+	            android:scrollbarAlwaysDrawHorizontalTrack="true">
+	            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	                android:orientation="horizontal"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:id="@+id/tristate_layout" />
+	        </HorizontalScrollView>
+	    </RelativeLayout>
     </LinearLayout>
     
     <View
@@ -91,7 +113,7 @@
         android:layout_height="fill_parent"
         android:background="#FF909090" />
     
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
@@ -100,7 +122,8 @@
 	    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	        android:orientation="horizontal"
 	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content">
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true">
 	        <HorizontalScrollView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -115,6 +138,6 @@
 	                />
 	        </HorizontalScrollView>
 	    </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

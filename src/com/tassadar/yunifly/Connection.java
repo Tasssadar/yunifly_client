@@ -48,6 +48,11 @@ public class Connection
         mChatService.stop();
     }
     
+    public void write(byte[] data)
+    {
+        mChatService.write(data);
+    }
+    
     private final Handler mBThandler = new Handler() {
         @Override
         public void handleMessage(Message msg)

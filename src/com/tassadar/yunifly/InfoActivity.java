@@ -22,6 +22,7 @@ public class InfoActivity extends Activity
         // test vals
         setAxisCount(4);
         setButtonCount(10);
+        setTristateCount(4);
     }
 
     @Override
@@ -32,14 +33,17 @@ public class InfoActivity extends Activity
         // need to reload layout, because it is different
         int axes = m_axes.size();
         int btns = m_buttons.size();
+        int tristate = m_tristate.size();
 
         m_axes.clear();
         m_buttons.clear();
+        m_tristate.clear();
 
         setContentView(R.layout.info);
 
         setAxisCount(axes);
         setButtonCount(btns);
+        setTristateCount(tristate);
     }
 
     public void setAxisCount(int count)
@@ -100,7 +104,37 @@ public class InfoActivity extends Activity
             }
         }
     }
+    
+    public void setTristateCount(int count)
+    {
+        if(m_tristate.size() == count)
+            return;
+
+        int size = m_tristate.size();
+        LinearLayout btn_layout = (LinearLayout)findViewById(R.id.tristate_layout);
+
+        while(size != count)
+        {
+            if(size < count)
+            {
+                RelativeLayout l = (RelativeLayout)getLayoutInflater()
+                        .inflate(R.layout.tristate_item, btn_layout, false);
+
+                ((TextView)l.findViewById(R.id.tristate_text)).setText(String.valueOf(size));
+
+                btn_layout.addView(l);
+                m_tristate.add(l);
+                ++size;
+            }
+            else
+            {
+                --size;
+                btn_layout.removeView(m_tristate.remove(size));
+            }
+        }
+    }
 
     private List<RelativeLayout> m_axes = new ArrayList<RelativeLayout>();
     private List<RelativeLayout> m_buttons = new ArrayList<RelativeLayout>();
+    private List<RelativeLayout> m_tristate = new ArrayList<RelativeLayout>();
 };

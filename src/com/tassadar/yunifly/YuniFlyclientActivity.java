@@ -156,7 +156,8 @@ public class YuniFlyclientActivity extends Activity {
     {
         state = 0;
         finishActivity(REQUEST_INFO);
-        mBluetoothAdapter = null;
+        if(!resetUI)
+            mBluetoothAdapter = null;
     }
 
     private void Connect(View v)
@@ -372,6 +373,9 @@ public class YuniFlyclientActivity extends Activity {
     {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3)
         {
+            YuniFlyclientActivity.this.startActivityForResult(
+                    new Intent(YuniFlyclientActivity.this, InfoActivity.class), REQUEST_INFO);
+            /*
             if(!mBluetoothAdapter.isEnabled())
             {
                 btTurnOn = 2;
@@ -380,6 +384,7 @@ public class YuniFlyclientActivity extends Activity {
                 return;
             }
             Connect(v);
+            */
         }
     };
 

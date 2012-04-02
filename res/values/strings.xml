@@ -8,7 +8,7 @@
     <string name="con_lost">Connection lost!</string>
     <string name="unable_to_con">Unable to connect!</string>
     <string name="cur_board">Current board:</string>
-    <string name="choose_board">Choose board:</string>
+    <string name="choose_board">Choose board: </string>
     <string name="cur_voltage">Current voltage: </string>
     <string name="pot">POT</string>
 </resources>
