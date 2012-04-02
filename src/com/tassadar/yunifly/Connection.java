@@ -46,14 +46,14 @@ public class Connection
     
     public void cancel()
     {
-    if(m_protocol != null)
-    m_protocol.stopGetter();
+    	if(m_protocol != null)
+    		m_protocol.stopGetter();
         mChatService.stop();
     }
     
     public void setProtocol(Protocol protocol)
     {
-    m_protocol = protocol;
+    	m_protocol = protocol;
     }
     
     public void write(byte[] data)

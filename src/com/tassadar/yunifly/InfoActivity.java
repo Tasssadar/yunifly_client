@@ -35,6 +35,7 @@ public class InfoActivity extends Activity
 
         m_progress = new ProgressDialog(this);
         m_progress.setTitle(R.string.getting_info);
+        m_progress.setMessage(getResources().getString(R.string.getting_info_sum));
         m_progress.show();
         
         m_protocol.readDeviceInfo();
