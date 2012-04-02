@@ -11,6 +11,7 @@
         style="@style/Widget.ProgressBar.Vertical"
         android:indeterminateOnly="false"
         android:layout_margin="5dp"
+        android:max="65535"
         android:layout_centerHorizontal="true" />
     <TextView android:id="@+id/bar_text"
         android:layout_width="wrap_content"

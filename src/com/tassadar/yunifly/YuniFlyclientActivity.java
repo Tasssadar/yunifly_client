@@ -77,7 +77,7 @@ public class YuniFlyclientActivity extends Activity {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null)
-            ShowAlert("This device does not have bluetooth adapter");
+            ShowAlert(R.string.no_bt, this);
         else if(!mBluetoothAdapter.isEnabled())
             EnableBT();
 
@@ -109,7 +109,7 @@ public class YuniFlyclientActivity extends Activity {
             if(resultCode != Activity.RESULT_OK)
             {
                 if(btTurnOn != 0)
-                    ShowAlert("Bluetooth is disabled!");
+                    ShowAlert(R.string.bt_disabled, this);
                 break;
             }
 
@@ -214,20 +214,24 @@ public class YuniFlyclientActivity extends Activity {
         listView.setEnabled(enable);
     }
 
-    private void ShowAlert(CharSequence text)
+    public static void ShowAlert(CharSequence text, Context context)
     {
-        AlertDialog.Builder builder2 = new AlertDialog.Builder(getApplication());
-        builder2.setMessage(text)
-        .setTitle("Error")
-        .setPositiveButton("Dismiss", new DialogInterface.OnClickListener()
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(text);
+        builder.setTitle(R.string.error);
+        builder.setPositiveButton(R.string.dismiss, new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int id)
             {
                 dialog.dismiss();
             }
         });
-        AlertDialog alert = builder2.create();
-        alert.show();
+        builder.create().show();
+    }
+    
+    public static void ShowAlert(int id, Context context)
+    {
+        ShowAlert(context.getText(id), context);
     }
 
     private void FindDevices()
@@ -373,9 +377,6 @@ public class YuniFlyclientActivity extends Activity {
     {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3)
         {
-            YuniFlyclientActivity.this.startActivityForResult(
-                    new Intent(YuniFlyclientActivity.this, InfoActivity.class), REQUEST_INFO);
-            /*
             if(!mBluetoothAdapter.isEnabled())
             {
                 btTurnOn = 2;
@@ -384,7 +385,6 @@ public class YuniFlyclientActivity extends Activity {
                 return;
             }
             Connect(v);
-            */
         }
     };
 

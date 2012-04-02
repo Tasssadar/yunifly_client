@@ -146,6 +146,11 @@ public class Packet
     {
         return m_opcode;
     }
+
+    public int getLen()
+    {
+        return m_data.length;
+    }
     
     private short m_read_itr;
     private short m_itr;

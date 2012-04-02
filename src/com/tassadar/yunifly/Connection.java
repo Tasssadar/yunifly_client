@@ -23,6 +23,7 @@ public class Connection
         mChatService = new BluetoothService(mBThandler);
         mChatService.start();
         mChatService.connect(device);
+        m_protocol = null;
     }
     
     public static Connection initInstance(Handler handler, BluetoothDevice device)
@@ -45,7 +46,14 @@ public class Connection
     
     public void cancel()
     {
+    if(m_protocol != null)
+    m_protocol.stopGetter();
         mChatService.stop();
+    }
+    
+    public void setProtocol(Protocol protocol)
+    {
+    m_protocol = protocol;
     }
     
     public void write(byte[] data)
@@ -78,9 +86,10 @@ public class Connection
                     break;
                 case MESSAGE_READ:
                 {
-                     if(msg.obj == null)
+                     if(msg.obj == null || m_protocol == null)
                          break;
                      
+                     m_protocol.dataRead((byte[])msg.obj);
                      break;
                 }
             }
@@ -90,4 +99,5 @@ public class Connection
     private static Connection instance;
     private Handler mHandler;
     private BluetoothService mChatService;
+    private Protocol m_protocol;
 };

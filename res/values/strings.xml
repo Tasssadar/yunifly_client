@@ -11,4 +11,10 @@
     <string name="choose_board">Choose board: </string>
     <string name="cur_voltage">Current voltage: </string>
     <string name="pot">POT</string>
+    <string name="getting_info">Getting info...</string>
+    <string name="error">Error</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="no_bt">This device does not have bluetooth adapter</string>
+    <string name="bt_disabled">Bluetooth is disabled!</string>
+    <string name="timeout">Timeout during data read!</string>
 </resources>
