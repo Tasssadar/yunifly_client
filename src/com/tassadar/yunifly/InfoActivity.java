@@ -9,6 +9,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,7 +30,11 @@ public class InfoActivity extends Activity
         setContentView(R.layout.info);
         
         m_adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
-        ((Spinner)findViewById(R.id.cur_board)).setAdapter(m_adapter);
+        m_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinner = (Spinner)findViewById(R.id.cur_board);
+        spinner.setAdapter(m_adapter);
+        spinner.setOnItemSelectedListener(boardSelected);
 
         m_protocol = new Protocol(protocolHandler);
         Connection.getInst().setProtocol(m_protocol);
@@ -50,6 +56,7 @@ public class InfoActivity extends Activity
         int axes = m_axes.size();
         int btns = m_buttons.size();
         int tristate = m_tristate.size();
+        int board = m_protocol.getDevice();
 
         m_axes.clear();
         m_buttons.clear();
@@ -57,7 +64,13 @@ public class InfoActivity extends Activity
 
         setContentView(R.layout.info);
 
-        ((Spinner)findViewById(R.id.cur_board)).setAdapter(m_adapter);
+        Spinner spinner = (Spinner)findViewById(R.id.cur_board);
+        spinner.setAdapter(m_adapter);
+        spinner.setOnItemSelectedListener(boardSelected);
+        spinner.setSelection(board);
+        
+        if(m_protocol.getInfo() != null)
+            ((TextView)findViewById(R.id.title_label)).setText(m_protocol.getInfo().deviceName);
 
         setAxisCount(axes);
         setButtonCount(btns);
@@ -154,15 +167,33 @@ public class InfoActivity extends Activity
     
     private void setItemsForDevice(short device, GlobalInfo info)
     {
-        ((TextView)findViewById(R.id.title_label)).setText(info.deviceName);
-        
-        for(short i = 0; i < info.boardCount; ++i)
-            m_adapter.add(info.boardInfos[i].name);
-
         setAxisCount(info.boardInfos[device].potCount);
         setButtonCount(info.boardInfos[device].btnCount);
         setTristateCount(info.boardInfos[device].triStateCount);
     }
+    
+    private final AdapterView.OnItemSelectedListener boardSelected = new AdapterView.OnItemSelectedListener() {
+
+        @Override
+        public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
+                long arg3) {
+            
+            m_protocol.stopGetter();
+            
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) { }
+            
+            setItemsForDevice((short)pos, m_protocol.getInfo());
+            m_protocol.setDevice((short)pos);
+            
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            
+        }
+    };
     
     private final Handler protocolHandler = new Handler()
     {
@@ -180,7 +211,11 @@ public class InfoActivity extends Activity
                         break;
                     }
 
-                    setItemsForDevice(m_protocol.getDevice(), (GlobalInfo)msg.obj);
+                    GlobalInfo info = (GlobalInfo)msg.obj;
+                    ((TextView)findViewById(R.id.title_label)).setText(info.deviceName);
+                    
+                    for(short i = 0; i < info.boardCount; ++i)
+                        m_adapter.add(info.boardInfos[i].name);
                     break;
                 }
                 case Protocol.DATA_POT_DATA:

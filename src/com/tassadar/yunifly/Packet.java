@@ -87,7 +87,7 @@ public class Packet
         
         while(read < len)
         {
-            short val = (short)(0xFF & ((int)m_data[offset+read]));
+            short val = (short)(0xFF & ((int)data[offset+read]));
             switch(m_itr)
             {
                 case 0:
@@ -139,7 +139,7 @@ public class Packet
     
     public boolean isValid()
     {
-        return (m_itr == 4+m_data.length);
+        return (m_data != null && m_itr == 4+m_data.length);
     }
     
     public short getOpcode()

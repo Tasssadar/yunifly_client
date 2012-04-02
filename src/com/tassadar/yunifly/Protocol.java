@@ -91,6 +91,7 @@ public class Protocol
                 m_info.boardInfos = new BoardInfo[m_info.boardCount];
                 for(short i = 0; i < m_info.boardCount; ++i)
                 {
+                    m_info.boardInfos[i] = new BoardInfo();
                     m_info.boardInfos[i].name = pkt.readString();
                     m_info.boardInfos[i].potCount = pkt.readByte();
                     m_info.boardInfos[i].btnCount = pkt.readByte();
@@ -198,7 +199,7 @@ public class Protocol
                 {
                     short val = pkt.readByte();
 
-                    for(;vals_itr > vals.length && vals_itr < (i+1)*8; ++vals_itr)
+                    for(;vals_itr < vals.length && vals_itr < (i+1)*8; ++vals_itr)
                         vals[vals_itr] = (val & (1 << vals_itr%8)) != 0;
                 }
                 m_dataHandler.obtainMessage(DATA_BTN_DATA, vals).sendToTarget();
