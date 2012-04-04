@@ -289,5 +289,5 @@ public class InfoActivity extends Activity
     
     private Protocol m_protocol;
     private ProgressDialog m_progress;
-    ArrayAdapter<CharSequence> m_adapter;
+    private ArrayAdapter<CharSequence> m_adapter;
 };
