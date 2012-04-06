@@ -10,10 +10,21 @@
               android:layout_height="wrap_content">
         <TextView android:id="@+id/title_label"
             android:layout_width="wrap_content"
-            android:text="@string/app_name"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/app_name"
             android:textSize="25sp"
-            android:layout_centerInParent="true"/>
+            android:layout_alignParentLeft="true"
+            />
+        <TextView android:id="@+id/cur_voltage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0px"
+                android:layout_marginRight="5dip"
+                android:textSize="25sp"
+                android:layout_alignParentRight="true"
+                android:text="5V"
+                />
     </RelativeLayout>
     <View
         android:layout_width="fill_parent"
@@ -32,34 +43,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
              >
-
             <TextView
 	            android:id="@+id/textView1"
 	            android:layout_column="0"
 	            android:text="@string/cur_board"
-	            android:gravity="center_vertical"
-	            android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+	            android:gravity="center_vertical" />
 	        <Spinner 
 	            android:id="@+id/cur_board"
 	            android:layout_column="1"
-	            android:prompt="@string/choose_board"
-	        />
+	            android:prompt="@string/choose_board" />
         </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical" >
-	        <TextView android:id="@+id/textView2"
-                android:text="@string/cur_voltage"
-                />
-	        <TextView android:id="@+id/cur_voltage"
-                android:layout_column="1"
-                android:text="5V"
-                />
-        </TableRow>
-
     </TableLayout>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"

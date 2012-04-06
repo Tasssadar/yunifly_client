@@ -67,7 +67,6 @@ public class YuniFlyclientActivity extends Activity {
 
         setContentView(R.layout.device_list);
 
-
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         IntentFilter discoverFinished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         IntentFilter filterBTChange = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
@@ -104,46 +103,47 @@ public class YuniFlyclientActivity extends Activity {
     {
         switch(requestCode)
         {
-        case REQUEST_ENABLE_BT:
-        {
-            if(resultCode != Activity.RESULT_OK)
+            case REQUEST_ENABLE_BT:
             {
-                if(btTurnOn != 0)
-                    ShowAlert(R.string.bt_disabled, this);
-                break;
-            }
-
-            switch(btTurnOn)
-            {
-            case 1:
-                FindDevices();
-                break;
-            case 2:
-                Connect(connectView);
-                break;
-            case 0:
-                Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices(); 
-                if (pairedDevices.size() > 0) {
-                    mPairedDevices.clear();
-                    findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
-                    for (BluetoothDevice device : pairedDevices) {
-                        mPairedDevices.add(device.getName() + "\n" + device.getAddress());
+                if(resultCode != Activity.RESULT_OK)
+                {
+                    if(btTurnOn != 0)
+                        ShowAlert(R.string.bt_disabled, this);
+                    break;
+                }
+    
+                switch(btTurnOn)
+                {
+                    case 1:
+                        FindDevices();
+                        break;
+                    case 2:
+                        Connect(connectView);
+                        break;
+                    case 0:
+                    {
+                        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices(); 
+                        if (pairedDevices.size() > 0) {
+                            mPairedDevices.clear();
+                            findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
+                            for (BluetoothDevice device : pairedDevices) {
+                                mPairedDevices.add(device.getName() + "\n" + device.getAddress());
+                            }
+                        }
+                        break;
                     }
                 }
+    
+                btTurnOn = 0;
+                connectView = null;
                 break;
             }
-
-            btTurnOn = 0;
-            connectView = null;
-            break;
+            case REQUEST_INFO:
+            {
+                Connection.Destroy();
+                break;
+            }
         }
-        case REQUEST_INFO:
-        {
-            Connection.Destroy();
-            break;
-        }
-        }
-
     } 
 
     private void EnableBT()
@@ -394,37 +394,39 @@ public class YuniFlyclientActivity extends Activity {
         {
             switch(msg.what)
             {
-            case Connection.CONNECTION_STATE:
-            {
-                switch(msg.arg1)
+                case Connection.CONNECTION_STATE:
                 {
-                case BluetoothService.STATE_CONNECTED:
-                    state |= STATE_CONNECTED;
-                    dialog.dismiss();
-                    YuniFlyclientActivity.this.startActivityForResult(
-                            new Intent(YuniFlyclientActivity.this, InfoActivity.class), REQUEST_INFO);
-                    EnableInteraction(true);
-                    return;
-                case Connection.CONNECTION_FAILED:
-                {
-                    Toast.makeText(YuniFlyclientActivity.this.getApplication(),
-                            getResources().getString(R.string.unable_to_con), 
-                            Toast.LENGTH_SHORT).show();
-                    EnableConnect(true);
+                    switch(msg.arg1)
+                    {
+                        case BluetoothService.STATE_CONNECTED:
+                        {
+                            state |= STATE_CONNECTED;
+                            dialog.dismiss();
+                            YuniFlyclientActivity.this.startActivityForResult(
+                                    new Intent(YuniFlyclientActivity.this, InfoActivity.class), REQUEST_INFO);
+                            EnableInteraction(true);
+                            return;
+                        }
+                        case Connection.CONNECTION_FAILED:
+                        {
+                            Toast.makeText(YuniFlyclientActivity.this.getApplication(),
+                                    getResources().getString(R.string.unable_to_con), 
+                                    Toast.LENGTH_SHORT).show();
+                            EnableConnect(true);
+                            return;
+                        }
+                        case Connection.CONNECTION_LOST:
+                        {
+                            Toast.makeText(YuniFlyclientActivity.this.getApplication(),
+                                    getResources().getString(R.string.con_lost),
+                                    Toast.LENGTH_SHORT).show();
+                            Disconnect(true);
+                            return;
+                        }
+                    }
                     return;
                 }
-                case Connection.CONNECTION_LOST:
-                {
-                    Toast.makeText(YuniFlyclientActivity.this.getApplication(),
-                            getResources().getString(R.string.con_lost),
-                            Toast.LENGTH_SHORT).show();
-                    Disconnect(true);
-                    return;
-                }
-                }
-                return;
             }
-            } // switch(msg.what)
         }
     };
 
