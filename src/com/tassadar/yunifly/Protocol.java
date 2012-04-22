@@ -236,6 +236,8 @@ public class Protocol
         
         public void run()
         {
+            return;
+/*
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) { }
@@ -250,6 +252,7 @@ public class Protocol
                     Thread.sleep(100);
                 } catch (InterruptedException e) { }
             }
+            */
         }
         
         volatile boolean m_run;
