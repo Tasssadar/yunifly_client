@@ -74,6 +74,7 @@ public class Protocol
     {
         new Thread(new Runnable() {
             public void run() {
+                m_info = null;
 
                 Packet pkt = new Packet(DEVICE, SMSG_GET_DEVICE_INFO, new short[0]);
                 pkt = waitForPacket(pkt, CMSG_DEVICE_INFO);
@@ -84,22 +85,22 @@ public class Protocol
                     return;
                 }
                 
-                m_info = new GlobalInfo();
+                GlobalInfo info = new GlobalInfo();
                 
-                m_info.deviceName = pkt.readString();
-                m_info.boardCount = pkt.readByte();
-                m_info.boardInfos = new BoardInfo[m_info.boardCount];
-                for(short i = 0; i < m_info.boardCount; ++i)
+                info.deviceName = pkt.readString();
+                info.boardCount = pkt.readByte();
+                info.boardInfos = new BoardInfo[info.boardCount];
+                for(short i = 0; i < info.boardCount; ++i)
                 {
-                    m_info.boardInfos[i] = new BoardInfo();
-                    m_info.boardInfos[i].name = pkt.readString();
-                    m_info.boardInfos[i].potCount = pkt.readByte();
-                    m_info.boardInfos[i].btnCount = pkt.readByte();
-                    m_info.boardInfos[i].triStateCount = pkt.readByte();
+                    info.boardInfos[i] = new BoardInfo();
+                    info.boardInfos[i].name = pkt.readString();
+                    info.boardInfos[i].potCount = pkt.readByte();
+                    info.boardInfos[i].btnCount = pkt.readByte();
+                    info.boardInfos[i].triStateCount = pkt.readByte();
                 }
                 
-                m_dataHandler.obtainMessage(DATA_GLOBAL_INFO, m_info).sendToTarget();
-
+                m_dataHandler.obtainMessage(DATA_GLOBAL_INFO, info).sendToTarget();
+                m_info = info;
                 m_getter = new GetterThread();
                 m_getter.start();
             }
@@ -179,6 +180,9 @@ public class Protocol
             }
         }
         
+        if(m_info == null)
+            return;
+
         switch(pkt.getOpcode())
         {
             case CMSG_POT:
